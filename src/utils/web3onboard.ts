@@ -1,44 +1,32 @@
-import Onboard from '@web3-onboard/core'
-import injectedModule from '@web3-onboard/injected-wallets'
-import { ethers } from 'ethers'
+import { init } from "@web3-onboard/react";
+import injectedModule from "@web3-onboard/injected-wallets";
 
-const MAINNET_RPC_URL = 'https://mainnet.infura.io/v3/<INFURA_KEY>'
+const INFURA_KEY = "";
 
-const injected = injectedModule()
+const ethereumRopsten = {
+  id: "0x3",
+  token: "rETH",
+  label: "Ethereum Ropsten",
+  rpcUrl: `https://ropsten.infura.io/v3/${INFURA_KEY}`,
+};
+const polygonMumbai = {
+  id: "0x13881",
+  token: "MATIC",
+  label: "Polygon - Mumbai",
+  rpcUrl: "https://matic-mumbai.chainstacklabs.com",
+};
 
-export const initWeb3Onboard = Onboard({
-	wallets: [injected],
-	chains: [
-		{
-			id: '0x1',
-			token: 'ETH',
-			label: 'Ethereum Mainnet',
-			rpcUrl: MAINNET_RPC_URL,
-		},
-	],
-})
+const chains = [ethereumRopsten, polygonMumbai];
 
-const wallets = await onboard.connectWallet()
+const wallets = [injectedModule()];
 
-console.log(wallets)
-
-if (wallets[0]) {
-	// create an ethers provider with the last connected wallet provider
-	const ethersProvider = new ethers.providers.Web3Provider(
-		wallets[0].provider,
-		'any'
-	)
-	// if using ethers v6 this is:
-	// ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
-
-	const signer = ethersProvider.getSigner()
-
-	// send a transaction with the ethers provider
-	const txn = await signer.sendTransaction({
-		to: '0x',
-		value: 100000000000000,
-	})
-
-	const receipt = await txn.wait()
-	console.log(receipt)
-}
+export const initWeb3Onboard = init({
+  wallets,
+  chains,
+  appMetadata: {
+    name: "Web3-Onboard Demo",
+    icon: "<svg>App Icon</svg>",
+    description: "A demo of Web3-Onboard.",
+  },
+  theme: "dark",
+});

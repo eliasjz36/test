@@ -5,6 +5,6 @@ export function filterAddressByChainId(etherspotAddresses, chainId) {
 	if (filtered[0]) {
 		return filtered[0].address
 	} else {
-		return '?'
+		return ''
 	}
 }
