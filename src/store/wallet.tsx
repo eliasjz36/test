@@ -24,15 +24,7 @@ type WalletState = {
 
 type WalletActions = {
   handleDestinyData: (e: any, name: string) => void;
-  getAllTransactions: () => void;
-  checkIfWalletIsInstalled: () => void;
-  checkIfWalletIsConnected: () => void;
-  checkIfTransactionExists: () => void;
-  connectWallet: () => Promise<void>;
-  disconnectWallet: () => void;
   sendTransaction: (to: string, amount: number) => void;
-  setProvider: (provider: any) => void;
-  setChainId: (chainId: any) => void;
 };
 
 type WalletStore = WalletState & WalletActions;
